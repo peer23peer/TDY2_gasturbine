@@ -10,7 +10,7 @@ from pint import __version__ as pint_version
 u = UnitRegistry(autoconvert_offset_to_baseunit=True)
 if int(pint_version.split('.')[0]) * 10 + int(pint_version.split('.')[1]) > 8:
     u.setup_matplotlib(True)
-    
+
 u.default_format = '.4f~L'
 set_application_registry(u)
 
