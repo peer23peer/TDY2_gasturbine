@@ -1,0 +1,828 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Gasturbine}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Alternatieve Toets TDY2}\label{alternatieve-toets-tdy2}
+
+Calculationsheet for a gasturbine
+
+\emph{note}: The cell below is needed to import libraries and set global
+settings.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        \PY{o}{\PYZpc{}}\PY{k}{precision} 3
+        \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{Latex}
+        \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{nan}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{GasTurbine} \PY{k}{import} \PY{o}{*}
+\end{Verbatim}
+
+
+    \section{Decription of the system}\label{decription-of-the-system}
+
+\subsection{States}\label{states}
+
+The following states are identified:\\
+0. Air at atmospheric conditions \(P_0 = P_{atm}\), \(T_0 = T_{atm}\)
+and \(v_0 = v_{atm}\) 1. Compressed air \(P_1 >> P_0\), \(T_1 > T_0\)
+and \(v_1 << v_0\) 2. Heated air \(P_2 = P_1\), \(T_2 >> T_1\) and
+\(v_2 > v_1\) 3. Heated air at atmospheric pressure
+\(P_3 = P_0 = P_{atm}\), \(T_3 < T_2\)
+
+\subsection{Transitions}\label{transitions}
+
+The system transitions are identified as follows:\\
+0 -\textgreater{} 1 \textbf{Isentropic compression} were air is sucked
+into a compressor.\\
+1 -\textgreater{} 2 \textbf{Isobaric heating} where air is heated in a
+combustion chamber.\\
+2 -\textgreater{} 3 \textbf{Isentropic expansion} where air is expanded
+till atmospheric pressure.\\
+3 -\textgreater{} 0 \textbf{Isobaric cooling} A fictive step where the
+air is cooled to atmorspheric conditions.
+
+\section{Know values}\label{know-values}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{P\PYZus{}atm} \PY{o}{=} \PY{l+m+mf}{1.013} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{bar}
+        \PY{n}{T\PYZus{}atm} \PY{o}{=} \PY{p}{(}\PY{l+m+mf}{15.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{degC}\PY{p}{)}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{n}{u}\PY{o}{.}\PY{n}{K}\PY{p}{)}
+        \PY{n}{c} \PY{o}{=} \PY{n}{Cycle}\PY{p}{(}\PY{p}{)}
+        \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p} \PY{o}{=} \PY{l+m+mf}{1005.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{J} \PY{o}{/} \PY{p}{(}\PY{n}{u}\PY{o}{.}\PY{n}{kg} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{K}\PY{p}{)}
+        \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}v} \PY{o}{=} \PY{l+m+mf}{716.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{J} \PY{o}{/} \PY{p}{(}\PY{n}{u}\PY{o}{.}\PY{n}{kg} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{K}\PY{p}{)}
+        \PY{n}{c}\PY{o}{.}\PY{n}{Q\PYZus{}in} \PY{o}{=} \PY{l+m+mi}{2000} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{kW}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{s} \PY{o}{=} \PY{n}{States}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{P} \PY{o}{=} \PY{n}{P\PYZus{}atm}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{o}{=} \PY{n}{T\PYZus{}atm}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{A} \PY{o}{=} \PY{l+m+mf}{1.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{m} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux} \PY{o}{=} \PY{l+m+mf}{6000.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{m} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{3} \PY{o}{/} \PY{n}{u}\PY{o}{.}\PY{n}{hr}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{P} \PY{o}{=} \PY{l+m+mf}{10.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{bar}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{A} \PY{o}{=} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{m} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{A} \PY{o}{=} \PY{l+m+mf}{0.1} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{m} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{P} \PY{o}{=} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{P}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{A} \PY{o}{=} \PY{l+m+mf}{1.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{m} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{P} \PY{o}{=} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{P}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{c}\PY{o}{.}\PY{n}{t} \PY{o}{=} \PY{n}{s}
+        \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{processtype} \PY{o}{=} \PY{n}{ProcessType}\PY{o}{.}\PY{n}{ISENTROPIC}
+        \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{processtype} \PY{o}{=} \PY{n}{ProcessType}\PY{o}{.}\PY{n}{ISOBARIC}
+        \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{processtype} \PY{o}{=} \PY{n}{ProcessType}\PY{o}{.}\PY{n}{ISENTROPIC}
+        \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{processtype} \PY{o}{=} \PY{n}{ProcessType}\PY{o}{.}\PY{n}{ISOBARIC}
+\end{Verbatim}
+
+
+    \section{Calculate of system
+constants}\label{calculate-of-system-constants}
+
+\begin{equation}
+    \frac{P_0 \dot{V_0}}{T_0} = \dot{m} R \rightarrow \dot{m} = \frac{P_0 \dot{V_0}}{R T_0}
+\end{equation}\begin{equation}
+    R = c_p - c_v
+\end{equation}\begin{equation}
+    k = \frac{c_p}{c_p}
+\end{equation}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{latex}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}5}]:}
+    
+    $ 289.0000\ \frac{\mathrm{J}}{\left(\mathrm{K} \cdot \mathrm{kg}\right)} $
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{latex}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{k}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}6}]:}
+    
+    $ 1.4036\ $
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{mass\PYZus{}flux}\PY{p}{(}\PY{n}{P}\PY{p}{,} \PY{n}{V\PYZus{}flux}\PY{p}{,} \PY{n}{R}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}             
+            \PY{k}{return} \PY{p}{(}\PY{n}{P} \PY{o}{*} \PY{n}{V\PYZus{}flux} \PY{o}{/} \PY{p}{(}\PY{n}{R} \PY{o}{*} \PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kg/s}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux} \PY{o}{=} \PY{n}{mass\PYZus{}flux}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+        \PY{n}{latex}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}7}]:}
+    
+    $ 2.0274\ \frac{\mathrm{kg}}{\mathrm{s}} $
+
+    
+
+    \section{Calculate Transitions and
+States}\label{calculate-transitions-and-states}
+
+\subsection{State 0}\label{state-0}
+
+\begin{equation}
+    \rho_0 = \frac{P_0}{T_0 R}
+    \begin{cases}
+        \frac{P_0 v_0}{T_0} = \dot{m} R \\
+        \rho_0 = \frac{\dot{m}}{v_0}
+    \end{cases}
+\end{equation}\begin{equation}
+    v_0 = \frac{\dot{V_0}}{\dot{m}}
+\end{equation}\begin{equation}
+    c_0 A_0 \rho_0 = \dot{m} \rightarrow c_0 = \frac{\dot{m}}{\rho_0 A_0}
+\end{equation}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{density}\PY{p}{(}\PY{n}{P}\PY{p}{,} \PY{n}{R}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}   
+            \PY{k}{return} \PY{n}{P} \PY{o}{/} \PY{p}{(}\PY{n}{R} \PY{o}{*} \PY{n}{T}\PY{p}{)}
+        
+        
+        \PY{k}{def} \PY{n+nf}{specific\PYZus{}volume}\PY{p}{(}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{V\PYZus{}flux}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{V\PYZus{}flux} \PY{o}{/} \PY{n}{m\PYZus{}flux}
+        
+        
+        \PY{k}{def} \PY{n+nf}{speed}\PY{p}{(}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{rho}\PY{p}{,} \PY{n}{A}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{m\PYZus{}flux} \PY{o}{/} \PY{p}{(}\PY{n}{rho} \PY{o}{*} \PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{rho} \PY{o}{=} \PY{n}{density}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{specific\PYZus{}volume}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux}\PY{p}{)}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{c} \PY{o}{=} \PY{n}{speed}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{rho}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+        \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}9}]:}
+    
+    \begin{equation}
+    State_{0} = \left( \begin{array}{ll}
+        P_{0}       & 101300.0000\ \mathrm{Pa}                   \\
+        T_{0}       & 288.1500\ \mathrm{K}                       \\
+        v_{0}       & 0.8221\ \frac{\mathrm{m}^{3}}{\mathrm{kg}} \\
+        \dot{V}_{0} & 1.6667\ \frac{\mathrm{m}^{3}}{\mathrm{s}}  \\
+        \rho_{0}    & 1.2164\ \frac{\mathrm{kg}}{\mathrm{m}^{3}} \\
+        c_{0}       & 1.6667\ \frac{\mathrm{m}}{\mathrm{s}}      \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{State 1}\label{state-1}
+
+Where \(\rho_1\), \(c_1\) and \(v_1\) are determined with the previous
+given formula.
+
+\begin{equation}
+    \frac{T_0^k}{P_0^{k-1}} = \frac{T_1^k}{P_1^{k-1}} \rightarrow T_1 = \left(\left(\frac{P_1}{P_0}\right)^{k-1}T_0^k\right)^{\frac{1}{k}}
+\end{equation}\begin{equation}
+    \dot{V}_1 = c_1 A_1
+\end{equation}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n+nd}{@u}\PY{o}{.}\PY{n}{wraps}\PY{p}{(}\PY{n}{ret}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{args}\PY{o}{=}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{k}{def} \PY{n+nf}{isentropische\PYZus{}dT}\PY{p}{(}\PY{n}{T\PYZus{}s}\PY{p}{,} \PY{n}{P\PYZus{}s}\PY{p}{,} \PY{n}{P\PYZus{}e}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{p}{(}\PY{p}{(}\PY{n}{P\PYZus{}e} \PY{o}{/} \PY{n}{P\PYZus{}s}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{*} \PY{n}{T\PYZus{}s} \PY{o}{*}\PY{o}{*} \PY{n}{k}\PY{p}{)} \PY{o}{*}\PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1} \PY{o}{/} \PY{n}{k}\PY{p}{)}
+         
+         
+         \PY{k}{def} \PY{n+nf}{V\PYZus{}flux}\PY{p}{(}\PY{n}{c}\PY{p}{,} \PY{n}{A}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{c} \PY{o}{*} \PY{n}{A}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{o}{=} \PY{n}{isentropische\PYZus{}dT}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{k}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{rho} \PY{o}{=} \PY{n}{density}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{c} \PY{o}{=} \PY{n}{speed}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{rho}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux} \PY{o}{=} \PY{n}{V\PYZus{}flux}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{specific\PYZus{}volume}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}11}]:}
+    
+    \begin{equation}
+    State_{1} = \left( \begin{array}{ll}
+        P_{1}       & 1000000.0000\ \mathrm{Pa}                  \\
+        T_{1}       & 556.6315\ \mathrm{K}                       \\
+        v_{1}       & 0.1609\ \frac{\mathrm{m}^{3}}{\mathrm{kg}} \\
+        \dot{V}_{1} & 0.3261\ \frac{\mathrm{m}^{3}}{\mathrm{s}}  \\
+        \rho_{1}    & 6.2163\ \frac{\mathrm{kg}}{\mathrm{m}^{3}} \\
+        c_{1}       & 0.6523\ \frac{\mathrm{m}}{\mathrm{s}}      \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{Transition 0 to 1}\label{transition-0-to-1}
+
+The transition from \textbf{state 0} to \textbf{state 1} is an
+isentropic process where work needs to be put into the system and no
+heat is transfered.
+
+\begin{equation}
+    w_{0-1} = \frac{-1}{k-1}\left(P_1 v_1 - P_0 v_0\right)
+\end{equation}\begin{equation}
+    q_{0-1} = 0.
+\end{equation}\begin{equation}
+    \Delta u = q_{0-1} - w_{0-1}
+\end{equation}\begin{equation}
+    w_{t,0-1} = q_{0-1} - \Delta h - \Delta e_{kin} - \Delta e_{pot}
+\end{equation}\begin{equation}
+    \Delta e_{kin} = \frac{1}{2}(c_1^2 - c_0^2)
+\end{equation}\begin{equation}
+    \Delta h_{0-1} = q_{0-1} - w_{t,0-1} - \Delta e_{kin}
+\end{equation}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{isentropisch\PYZus{}work}\PY{p}{(}\PY{n}{P\PYZus{}s}\PY{p}{,} \PY{n}{V\PYZus{}s}\PY{p}{,} \PY{n}{P\PYZus{}e}\PY{p}{,} \PY{n}{V\PYZus{}e}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.} \PY{o}{/} \PY{p}{(}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{P\PYZus{}e} \PY{o}{*} \PY{n}{V\PYZus{}e} \PY{o}{\PYZhy{}} \PY{n}{P\PYZus{}s} \PY{o}{*} \PY{n}{V\PYZus{}s}\PY{p}{)}
+         
+         
+         \PY{k}{def} \PY{n+nf}{delta\PYZus{}u}\PY{p}{(}\PY{n}{q}\PY{p}{,} \PY{n}{w}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{q} \PY{o}{\PYZhy{}} \PY{n}{w}
+         
+         
+         \PY{k}{def} \PY{n+nf}{delta\PYZus{}e\PYZus{}kin}\PY{p}{(}\PY{n}{c\PYZus{}s}\PY{p}{,} \PY{n}{c\PYZus{}e}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{p}{(}\PY{n}{c\PYZus{}e} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{n}{c\PYZus{}s} \PY{o}{*}\PY{o}{*} \PY{l+m+mi}{2}\PY{p}{)}
+         
+         
+         \PY{k}{def} \PY{n+nf}{delta\PYZus{}h}\PY{p}{(}\PY{n}{T\PYZus{}s}\PY{p}{,} \PY{n}{T\PYZus{}e}\PY{p}{,} \PY{n}{c\PYZus{}p}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{c\PYZus{}p} \PY{o}{*} \PY{p}{(}\PY{n}{T\PYZus{}e} \PY{o}{\PYZhy{}} \PY{n}{T\PYZus{}s}\PY{p}{)}
+         
+         
+         \PY{k}{def} \PY{n+nf}{technical\PYZus{}work}\PY{p}{(}\PY{n}{q}\PY{p}{,} \PY{n}{dh}\PY{p}{,} \PY{n}{de\PYZus{}kin}\PY{p}{,} \PY{n}{de\PYZus{}pot}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{q} \PY{o}{\PYZhy{}} \PY{n}{dh} \PY{o}{\PYZhy{}} \PY{n}{de\PYZus{}kin} \PY{o}{\PYZhy{}} \PY{n}{de\PYZus{}pot}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{q} \PY{o}{=} \PY{l+m+mf}{0.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{kJ} \PY{o}{/} \PY{n}{u}\PY{o}{.}\PY{n}{kg}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{w} \PY{o}{=} \PY{n}{isentropisch\PYZus{}work}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{v}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{v}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{k}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{du} \PY{o}{=} \PY{n}{delta\PYZus{}u}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{w}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin} \PY{o}{=} \PY{n}{delta\PYZus{}e\PYZus{}kin}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{dh} \PY{o}{=} \PY{n}{delta\PYZus{}h}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{w\PYZus{}t} \PY{o}{=} \PY{n}{technical\PYZus{}work}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{dh}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}pot}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}13}]:}
+    
+    \begin{equation}
+    Trans_{0->1} = \left( \begin{array}{ll}
+        q_{0->1}            & 0.0000\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        w_{0->1}            & -192.2327\ \frac{\mathrm{kJ}}{\mathrm{kg}} \\
+        w_{t,0->1}          & -269.8227\ \frac{\mathrm{kJ}}{\mathrm{kg}} \\
+        \Delta u_{0->1}     & 192.2327\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        \Delta e_{0->1,kin} & -0.0012\ \frac{\mathrm{kJ}}{\mathrm{kg}}   \\
+        \Delta e_{0->1,pot} & 0.0000\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        \Delta h_{0->1}     & 269.8239\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{Transition 1 to 2}\label{transition-1-to-2}
+
+State 2 can best be calculated by first determining the heat and work
+transfer in transition 1 -\textgreater{} 2. Since the amount of heating
+energy \(Q_{in}\) is known. The transition from \textbf{state 1} to
+\textbf{state 2} is an isobaric heating process. Where heat is put into
+the system which is kept at an constant pressure.
+
+\begin{equation}
+    q_{1-2} = \frac{Q_{in}}{\dot{m}}
+\end{equation}\begin{equation}
+    w_{1-2} = q_{1-2} - \frac{q_{1-2}}{k}
+    \begin{cases}
+        q_{1-2} = \frac{k}{k-1} P(v_2 - v_1) \\
+        w_{1-2} = P(v_2 - v_1)
+    \end{cases}
+\end{equation}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{def} \PY{n+nf}{isobaar\PYZus{}heat\PYZus{}Qm}\PY{p}{(}\PY{n}{Q\PYZus{}in}\PY{p}{,} \PY{n}{m\PYZus{}flux}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{Q\PYZus{}in} \PY{o}{/} \PY{n}{m\PYZus{}flux}
+         
+         
+         \PY{k}{def} \PY{n+nf}{isobaar\PYZus{}work\PYZus{}kq}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{q}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{q} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{q} \PY{o}{/} \PY{n}{k}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{q} \PY{o}{=} \PY{n}{isobaar\PYZus{}heat\PYZus{}Qm}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{Q\PYZus{}in}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{w} \PY{o}{=} \PY{n}{isobaar\PYZus{}work\PYZus{}kq}\PY{p}{(}\PY{n}{k}\PY{o}{=}\PY{n}{c}\PY{o}{.}\PY{n}{k}\PY{p}{,} \PY{n}{q}\PY{o}{=}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{du} \PY{o}{=} \PY{n}{delta\PYZus{}u}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{w}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{State 2}\label{state-2}
+
+From here \textbf{state 2} can be calculated, where \(\rho_2\), \(v_2\),
+\(c_2\) and \(\dot{V}_2\) are calculated using earlier provided
+formulas.
+
+\begin{equation}
+    q_{1-2} = c_p(T_2-T_1) \rightarrow T_2 = \frac{q_{1-2}}{c_p} + T_1
+\end{equation}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{def} \PY{n+nf}{isobaar\PYZus{}dT}\PY{p}{(}\PY{n}{q}\PY{p}{,} \PY{n}{c\PYZus{}p}\PY{p}{,} \PY{n}{T\PYZus{}s}\PY{p}{)}\PY{p}{:}
+             \PY{k}{return} \PY{n}{q} \PY{o}{/} \PY{n}{c\PYZus{}p} \PY{o}{+} \PY{n}{T\PYZus{}s}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{o}{=} \PY{n}{isobaar\PYZus{}dT}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{rho} \PY{o}{=} \PY{n}{density}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{c} \PY{o}{=} \PY{n}{speed}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{rho}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux} \PY{o}{=} \PY{n}{V\PYZus{}flux}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{specific\PYZus{}volume}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}17}]:}
+    
+    \begin{equation}
+    State_{2} = \left( \begin{array}{ll}
+        P_{2}       & 1000000.0000\ \mathrm{Pa}                  \\
+        T_{2}       & 1538.2036\ \mathrm{K}                      \\
+        v_{2}       & 0.4445\ \frac{\mathrm{m}^{3}}{\mathrm{kg}} \\
+        \dot{V}_{2} & 0.9013\ \frac{\mathrm{m}^{3}}{\mathrm{s}}  \\
+        \rho_{2}    & 2.2495\ \frac{\mathrm{kg}}{\mathrm{m}^{3}} \\
+        c_{2}       & 9.0127\ \frac{\mathrm{m}}{\mathrm{s}}      \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{Transition 1 to 2
+(continued)}\label{transition-1-to-2-continued}
+
+From here the transition can be calculated further, using earlier given
+formulas.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin} \PY{o}{=} \PY{n}{delta\PYZus{}e\PYZus{}kin}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{dh} \PY{o}{=} \PY{n}{delta\PYZus{}h}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{w\PYZus{}t} \PY{o}{=} \PY{n}{technical\PYZus{}work}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{dh}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}pot}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}18}]:}
+    
+    \begin{equation}
+    Trans_{1->2} = \left( \begin{array}{ll}
+        q_{1->2}            & 986.4800\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        w_{1->2}            & 283.6743\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        w_{t,1->2}          & -0.0404\ \frac{\mathrm{kJ}}{\mathrm{kg}}   \\
+        \Delta u_{1->2}     & 702.8056\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        \Delta e_{1->2,kin} & 0.0404\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        \Delta e_{1->2,pot} & 0.0000\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        \Delta h_{1->2}     & 986.4800\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{State 3}\label{state-3}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{o}{=} \PY{n}{isentropische\PYZus{}dT}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{k}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{rho} \PY{o}{=} \PY{n}{density}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{c} \PY{o}{=} \PY{n}{speed}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{rho}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux} \PY{o}{=} \PY{n}{V\PYZus{}flux}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{A}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{specific\PYZus{}volume}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{m\PYZus{}flux}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{V\PYZus{}flux}\PY{p}{)}
+         \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}19}]:}
+    
+    \begin{equation}
+    State_{3} = \left( \begin{array}{ll}
+        P_{3}       & 101300.0000\ \mathrm{Pa}                   \\
+        T_{3}       & 796.2779\ \mathrm{K}                       \\
+        v_{3}       & 2.2717\ \frac{\mathrm{m}^{3}}{\mathrm{kg}} \\
+        \dot{V}_{3} & 4.6057\ \frac{\mathrm{m}^{3}}{\mathrm{s}}  \\
+        \rho_{3}    & 0.4402\ \frac{\mathrm{kg}}{\mathrm{m}^{3}} \\
+        c_{3}       & 4.6057\ \frac{\mathrm{m}}{\mathrm{s}}      \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{Transition 2 to 3}\label{transition-2-to-3}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{q} \PY{o}{=} \PY{l+m+mf}{0.} \PY{o}{*} \PY{n}{u}\PY{o}{.}\PY{n}{kJ} \PY{o}{/} \PY{n}{u}\PY{o}{.}\PY{n}{kg}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{w} \PY{o}{=} \PY{n}{isentropisch\PYZus{}work}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{v}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{P}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{v}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{k}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{du} \PY{o}{=} \PY{n}{delta\PYZus{}u}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{w}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin} \PY{o}{=} \PY{n}{delta\PYZus{}e\PYZus{}kin}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{dh} \PY{o}{=} \PY{n}{delta\PYZus{}h}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{w\PYZus{}t} \PY{o}{=} \PY{n}{technical\PYZus{}work}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{dh}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}pot}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}20}]:}
+    
+    \begin{equation}
+    Trans_{2->3} = \left( \begin{array}{ll}
+        q_{2->3}            & 0.0000\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        w_{2->3}            & 531.2187\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        w_{t,2->3}          & 745.6653\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        \Delta u_{2->3}     & -531.2187\ \frac{\mathrm{kJ}}{\mathrm{kg}} \\
+        \Delta e_{2->3,kin} & -0.0300\ \frac{\mathrm{kJ}}{\mathrm{kg}}   \\
+        \Delta e_{2->3,pot} & 0.0000\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        \Delta h_{2->3}     & -745.6352\ \frac{\mathrm{kJ}}{\mathrm{kg}} \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \subsection{Transition 3 to 0}\label{transition-3-to-0}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{q} \PY{o}{=} \PY{n}{isobaar\PYZus{}heat}\PY{p}{(}\PY{n}{c\PYZus{}p}\PY{o}{=}\PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p}\PY{p}{,} \PY{n}{T\PYZus{}s}\PY{o}{=}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{T\PYZus{}e}\PY{o}{=}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{w} \PY{o}{=} \PY{n}{isobaar\PYZus{}work}\PY{p}{(}\PY{n}{R}\PY{o}{=}\PY{n}{c}\PY{o}{.}\PY{n}{R}\PY{p}{,} \PY{n}{T\PYZus{}s}\PY{o}{=}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{T\PYZus{}e}\PY{o}{=}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{du} \PY{o}{=} \PY{n}{delta\PYZus{}u}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{w}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin} \PY{o}{=} \PY{n}{delta\PYZus{}e\PYZus{}kin}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{c}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{dh} \PY{o}{=} \PY{n}{delta\PYZus{}h}\PY{p}{(}\PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{c\PYZus{}p}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{w\PYZus{}t} \PY{o}{=} \PY{n}{technical\PYZus{}work}\PY{p}{(}\PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{q}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{dh}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}kin}\PY{p}{,} \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{de\PYZus{}pot}\PY{p}{)}
+         \PY{n}{c}\PY{o}{.}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}21}]:}
+    
+    \begin{equation}
+    Trans_{3->0} = \left( \begin{array}{ll}
+        q_{3->0}            & -510.6686\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        w_{3->0}            & -146.8490\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        w_{t,3->0}          & 0.0092\ \frac{\mathrm{kJ}}{\mathrm{kg}}     \\
+        \Delta u_{3->0}     & -363.8196\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+        \Delta e_{3->0,kin} & -0.0092\ \frac{\mathrm{kJ}}{\mathrm{kg}}    \\
+        \Delta e_{3->0,pot} & 0.0000\ \frac{\mathrm{kJ}}{\mathrm{kg}}     \\
+        \Delta h_{3->0}     & -510.6686\ \frac{\mathrm{kJ}}{\mathrm{kg}}  \\
+    \end{array} \right)
+\end{equation}
+
+
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{c}\PY{o}{.}\PY{n}{plot\PYZus{}Pv}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{c}\PY{o}{.}\PY{n}{print\PYZus{}closed}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}23}]:}
+
+    \begin{tabular}{l | l | l | l} \hline
+    \verb|     | & \verb|      q       | & \verb|   Delta u    | & \verb|      w       | \\ \hline
+    \hline
+    \verb|0-1  | & \verb|0.000 kJ/kg   | & \verb|192.233 kJ/kg | & \verb|-192.233 kJ/kg| \\ \hline
+    \verb|1-2  | & \verb|986.480 kJ/kg | & \verb|702.806 kJ/kg | & \verb|283.674 kJ/kg | \\ \hline
+    \verb|2-3  | & \verb|0.000 kJ/kg   | & \verb|-531.219 kJ/kg| & \verb|531.219 kJ/kg | \\ \hline
+    \verb|3-0  | & \verb|-510.669 kJ/kg| & \verb|-363.820 kJ/kg| & \verb|-146.849 kJ/kg| \\ \hline
+    Sigma & \verb|475.811 kJ/kg | & \verb|-0.000 kJ/kg  | & \verb|475.811 kJ/kg | \\ \hline
+\end{tabular}
+
+
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{c}\PY{o}{.}\PY{n}{print\PYZus{}open}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+\texttt{\color{outcolor}Out[{\color{outcolor}24}]:}
+    
+    \begin{tabular}{l | l | l | l | l | l} \hline
+    \verb|     | & \verb|      q       | & \verb|   Delta h    | & \verb|     w_t      | & \verb|Delta e_{kin}| & \verb|Delta e_{pot}| \\ \hline
+    \hline
+    \verb|0-1  | & \verb|0.000 kJ/kg   | & \verb|269.824 kJ/kg | & \verb|-269.823 kJ/kg| & \verb|-0.001 kJ/kg | & \verb|0.000 kJ/kg  | \\ \hline
+    \verb|1-2  | & \verb|986.480 kJ/kg | & \verb|986.480 kJ/kg | & \verb|-0.040 kJ/kg  | & \verb|0.040 kJ/kg  | & \verb|0.000 kJ/kg  | \\ \hline
+    \verb|2-3  | & \verb|0.000 kJ/kg   | & \verb|-745.635 kJ/kg| & \verb|745.665 kJ/kg | & \verb|-0.030 kJ/kg | & \verb|0.000 kJ/kg  | \\ \hline
+    \verb|3-0  | & \verb|-510.669 kJ/kg| & \verb|-510.669 kJ/kg| & \verb|0.009 kJ/kg   | & \verb|-0.009 kJ/kg | & \verb|0.000 kJ/kg  | \\ \hline
+    Sigma & \verb|475.811 kJ/kg | & \verb|0.000 kJ/kg   | & \verb|475.811 kJ/kg | & \verb|-0.000 kJ/kg | & \verb|0.000 kJ/kg  | \\ \hline
+\end{tabular}
+
+
+
+    
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

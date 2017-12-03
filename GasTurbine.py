@@ -1,4 +1,5 @@
 import numpy as np
+import six
 from IPython.display import Latex
 import matplotlib.pyplot as plt
 import pytablewriter
@@ -52,18 +53,20 @@ class TransitionState:
     def print(self):
         self.to_pref_units()
         t_f = '{}'.format(self.id)
-        writer = pytablewriter.RstGridTableWriter()
-        writer.table_name = 'State {t_f}'.format(t_f=t_f)
+        writer = pytablewriter.LatexMatrixWriter()
+        writer.table_name = 'State_{{{t_f}}}'.format(t_f=t_f)
         writer.header_list = ['', 'value                ']
         writer.value_matrix = [
-            ['$ P_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.P)],
-            ['$ T_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.T)],
-            ['$ v_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.v)],
-            ['$ \dot{{V}}_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.V_flux)],
-            ['$ \\rho_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.rho)],
-            ['$ c_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.c)]
+            ['P_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.P)],
+            ['T_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.T)],
+            ['v_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.v)],
+            ['\\dot{{V}}_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.V_flux)],
+            ['\\rho_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.rho)],
+            ['c_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.c)]
         ]
-        return writer
+        writer.stream = six.StringIO()
+        writer.write_table()
+        return Latex(writer.stream.getvalue())
 
     def to_pref_units(self):
         self.P.ito('Pa')
@@ -111,19 +114,21 @@ class Transition:
     def print(self):
         self.to_pref_units()
         t_f = str(self)
-        writer = pytablewriter.RstGridTableWriter()
-        writer.table_name = 'System Transition State {}'.format(t_f)
+        writer = pytablewriter.LatexMatrixWriter()
+        writer.table_name = 'Trans_{{{}}}'.format(t_f)
         writer.header_list = ['', 'value']
         writer.value_matrix = [
-            ['$ q_{{{t_f}}} $'.format(t_f=t_f), '$ {} $ '.format(self.q)],
-            ['$ w_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.w)],
-            ['$ w_{{t,{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.w_t)],
-            ['$ \Delta u_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.du)],
-            ['$ \Delta e_{{{t_f},kin}} $'.format(t_f=t_f), '$ {} $'.format(self.de_kin)],
-            ['$ \Delta e_{{{t_f},pot}} $'.format(t_f=t_f), '$ {} $'.format(self.de_pot)],
-            ['$ \Delta h_{{{t_f}}} $'.format(t_f=t_f), '$ {} $'.format(self.dh)]
+            ['q_{{{t_f}}}'.format(t_f=t_f), '{} '.format(self.q)],
+            ['w_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.w)],
+            ['w_{{t,{t_f}}}'.format(t_f=t_f), '{}'.format(self.w_t)],
+            ['\\Delta u_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.du)],
+            ['\\Delta e_{{{t_f},kin}}'.format(t_f=t_f), '{}'.format(self.de_kin)],
+            ['\\Delta e_{{{t_f},pot}}'.format(t_f=t_f), '{}'.format(self.de_pot)],
+            ['\\Delta h_{{{t_f}}}'.format(t_f=t_f), '{}'.format(self.dh)]
         ]
-        return writer
+        writer.stream = six.StringIO()
+        writer.write_table()
+        return Latex(writer.stream.getvalue())
 
     def P_isobaar(self, v):
         return np.ones((self.resolution,)) * self.start.P.to('Pa')
@@ -189,44 +194,51 @@ class Cycle:
         plt.show()
 
     def print_closed(self):
-        writer = pytablewriter.RstGridTableWriter()
-        writer.table_name = 'Energy balance of closed system'
-        writer.header_list = ['', ' $ q $ ', '$ \Delta u $ ', ' $ w $ ']
+        u.default_format = '.3f~P'
+        writer = pytablewriter.LatexTableWriter()
+        writer.table_name = 'E_{closed}'
+        writer.header_list = ['', 'q ', 'Delta u', 'w']
         value_matrix = []
         for t, s, e in self:
             c = []
             c.append('{}-{}'.format(s, e))
-            c.append('$ {} $'.format(t.q))
-            c.append('$ {} $'.format(t.du))
-            c.append('$ {} $'.format(t.w))
+            c.append('{}'.format(t.q))
+            c.append('{}'.format(t.du))
+            c.append('{}'.format(t.w))
             value_matrix.append(c)
-        sum_c = ['$ \Sigma $', '$ {} $'.format(self.sum('q')), '$ {} $'.format(self.sum('du')),
-                 '$ {} $'.format(self.sum('w'))]
+        sum_c = ['Sigma', '{}'.format(self.sum('q')), '{}'.format(self.sum('du')),
+                 '{}'.format(self.sum('w'))]
         value_matrix.append(sum_c)
         writer.value_matrix = value_matrix
-        return writer
+        writer.stream = six.StringIO()
+        writer.write_table()
+        return Latex(writer.stream.getvalue())
 
     def print_open(self):
-        writer = pytablewriter.RstGridTableWriter()
-        writer.table_name = 'Energy balance of open system'
-        writer.header_list = ['', ' $ q $ ', ' $ \Delta h $ ', ' $ w_t $ ', ' $ \Delta e_{kin} $ ',
-                              ' $ \Delta e_{pot} $ ']
+        u.default_format = '.3f~P'
+        writer = pytablewriter.LatexTableWriter()
+        writer.table_name = 'E_{open}'
+        writer.header_list = ['', 'q', 'Delta h', 'w_t', 'Delta e_{kin}',
+                              'Delta e_{pot}']
         value_matrix = []
         for t, s, e in self:
             c = []
             c.append('{}-{}'.format(s, e))
-            c.append('$ {} $'.format(t.q))
-            c.append('$ {} $'.format(t.dh))
-            c.append('$ {} $'.format(t.w_t))
-            c.append('$ {} $'.format(t.de_kin))
-            c.append('$ {} $'.format(t.de_pot))
+            c.append('{}'.format(t.q))
+            c.append('{}'.format(t.dh))
+            c.append('{}'.format(t.w_t))
+            c.append('{}'.format(t.de_kin))
+            c.append('{}'.format(t.de_pot))
             value_matrix.append(c)
-        sum_c = ['$ \Sigma $', '$ {} $'.format(self.sum('q')), '$ {} $'.format(self.sum('dh')),
-                 '$ {} $'.format(self.sum('w_t')),
-                 '$ {} $'.format(self.sum('de_kin')), '$ {} $'.format(self.sum('de_pot'))]
+        sum_c = ['Sigma', '{}'.format(self.sum('q')), '{}'.format(self.sum('dh')),
+                 '{}'.format(self.sum('w_t')),
+                 '{}'.format(self.sum('de_kin')), '{}'.format(self.sum('de_pot'))]
         value_matrix.append(sum_c)
         writer.value_matrix = value_matrix
-        return writer
+        writer.stream = six.StringIO()
+        writer.write_table()
+        return Latex(writer.stream.getvalue())
+
 
     def sum(self, attr):
         return sum([getattr(t, attr) for t in self.t])
