@@ -63,7 +63,7 @@ pytest==3.2.5
 pytest-cov==2.5.1
 python-dateutil==2.6.1
 pytz==2017.3
-PyYAML==3.12
+PyYAML==5.4
 pyzmq==17.0.0b2
 qtconsole==4.3.1
 qtico==0.1
