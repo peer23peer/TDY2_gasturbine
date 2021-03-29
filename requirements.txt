@@ -53,7 +53,7 @@ pip-tools==1.10.1
 prompt-toolkit==1.0.15
 py==1.5.2
 pybtex==0.21
-Pygments==2.2.0
+Pygments==2.7.4
 pyparsing==2.2.0
 PyQt5==5.9.2
 pyreadline==2.1
