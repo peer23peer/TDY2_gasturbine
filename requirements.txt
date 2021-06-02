@@ -32,7 +32,7 @@ jupyter-console==5.2.0
 jupyter-core==4.4.0
 latexcodec==1.0.5
 Logbook==1.1.0
-markdown2==2.3.5
+markdown2==2.4.0
 MarkupSafe==1.0
 matplotlib==2.1.0
 mbstrdecoder==0.2.2
